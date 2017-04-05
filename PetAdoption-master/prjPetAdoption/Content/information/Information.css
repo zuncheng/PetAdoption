@@ -1,0 +1,22 @@
+﻿
+@charset "UTF-8";
+* {
+  font-family: 微軟正黑體;
+}
+h2{
+    color: #4C6891;
+    font-family: 微軟正黑體; 
+    font-size:20px ;
+    font-weight:bold;
+}
+
+h3{
+    color: #3B5998;
+    font-family: 微軟正黑體; 
+    font-size:18px ;
+}
+h4{
+    color: #000000;
+    font-family: 微軟正黑體; 
+    font-size:16px ;
+}

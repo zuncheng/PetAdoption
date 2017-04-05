@@ -1,0 +1,231 @@
+﻿@model prjPetAdoption.ViewModels.AllAniDataViewModel
+
+@{
+
+    Layout = "~/Views/Shared/_MemberLayout.cshtml";
+}
+
+
+<script type="text/javascript">
+   function Delete(id) {
+       if (confirm('你確定要刪除嗎 ?')) {
+           $.post('<%= Url.Action("DelfollowAniSure","aniData") %>', { id: id },
+                    function(data, textStatus) {
+                        if (data == "1") {
+                            alert('刪除成功!');
+                            location.reload(true);
+                        }
+                        else {
+                            alert('Error');
+                        }
+                    }, "text");
+       }
+   }
+</script> 
+
+
+@*<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>寵物追蹤清單</h4>
+                <hr />
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<table  class="table table-striped table-hover " style="max-width:85%"  align="center">
+    <thead>
+        <tr align="center"  class="info">           
+            <th class="col-photo">圖片</th>
+            <th class="col-goods">名稱</th>
+            <th class="col-user ">種類</th>
+            <th class="col-user ">品種</th>
+            <th class="col-width-5x order-desc">動作</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (@ViewBag.noFollow != null)
+        {
+        <tr class="row-odd">
+            <td colspan="5" align="center">
+                <a href="#">
+                    <img src="@ViewBag.noFollow" style="max-width:700px" />
+                </a>
+            </td>
+
+        </tr>
+        }
+      
+            @foreach (var item in Model.followAniList)
+            {
+<tr class="row-odd">
+
+                <td><a href="@Url.Action("oneAni", "aniData",new { id = @item.animalID})">
+                    <img src="@item.animalPicAddress" style="max-height:150px;max-width:150px" /></a></td>
+                <td class="col-goods">
+                    <a href="@Url.Action("oneAni", "aniData",new { id = @item.animalID})">@item.animalName</a>
+                </td>
+                <td class="col-user">
+                    <a href="#">@item.animalKind</a>
+                </td>
+                <td class="col-user">
+                    <a href="#">@item.animalType</a>
+                </td>
+                <td>
+                 @using (Html.BeginForm("DelfollowAniSure", "aniData", new { id = @item.followID }, FormMethod.Post, new {  onsubmit = "return confirm('是否確認取消追蹤?');" }))
+                 {
+                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+                    <button type="submit" class="btn btn-success">取消追蹤</button>
+                 }
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>*@
+
+
+<section id="main-content">
+    <section class="wrapper">
+        <h3><i class="fa fa-angle-right"></i>追蹤管理</h3>
+        <div class="row mt">
+            <div class="col-md-12">
+                <div class="content-panel">
+                    <table class="table table-striped table-advance table-hover">
+                        <h4><i class="fa fa-angle-right"></i>寵物追蹤清單</h4>
+                        <hr>
+                        <thead>
+                            <tr>
+                                <th><i class="glyphicon glyphicon-picture"></i> 照片</th>
+                                <th><i class="fa fa-bookmark"></i> 名稱</th>
+                                <th><i class="fa fa-bookmark"></i> 種類</th>
+                                <th><i class="fa fa-bookmark"></i> 品種</th>
+                                <th><i class="fa fa-map-marker"></i> 地區</th>
+                                <th><i class="fa fa-magic"></i> 毛色</th>
+                                <th><i class="fa fa-edit"></i> 認養狀態</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @if (@ViewBag.noFollow != null)
+                            {
+                                <tr class="row-odd">
+                                    <td colspan="5" align="center">
+                                        <a href="#">
+                                            <img src="@ViewBag.noFollow" style="max-width:700px" />
+                                        </a>
+                                    </td>
+
+                                </tr>
+                            }
+
+                            @foreach (var item in Model.followAniList)
+                             {
+                                <tr class="row-odd">
+
+                                    <td width="150px">
+                                        <a href="@Url.Action("oneAni", "aniData",new { id = @item.animalID})">
+                                            <img src="@item.animalPicAddress" alumb="true" _w="100" _h="100" />                                            
+                                        </a>
+                                    </td>
+                                    <td >
+                                        <a href="@Url.Action("oneAni", "aniData",new { id = @item.animalID})">@item.animalName</a>
+                                    </td>
+                                    <td >
+                                        <a href="@Url.Action("oneAni", "aniData",new { id = @item.animalID})">@item.animalKind</a>
+                                    </td>
+                                    <td >
+                                       @item.animalType
+                                    </td>
+                                    <td>
+                                        @item.animalAddress
+                                    </td>
+                                    <td>
+                                        @item.animalColor
+                                    </td>
+                                    <td>
+                                        @if (@item.animalGetter_userID == null)
+                                        {
+                                            <text>尚未被認養</text>
+                                        }
+                                        else
+                                        {
+                                            <text>已被認養</text>
+                                        }
+                                    </td>
+                                    <td>
+                                        @using (Html.BeginForm("DelfollowAniSure", "aniData", new { id = @item.followID }, FormMethod.Post, new { onsubmit = "return confirm('是否確認取消追蹤?');" }))
+                                        {
+                                            @Html.HttpMethodOverride(HttpVerbs.Delete)
+                                            <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                                        }
+                                    </td>
+                                </tr>
+
+                            }
+                            @*<tr>
+                                <td width="150px"><img src="http://www.mrleung.com/i/14525950109180.jpg" alumb="true" _w="100" _h="100" /></td>
+                                <td>佐藤和真</td>
+                                <td>宅男</td>
+                                <td>盜賊</td>
+                                <td>美好的世界小鎮</td>
+                                <td><div class="btn btn-success btn-xs"><span class="glyphicon glyphicon-ok"></span></div></td>
+                                <td><span class="label label-info label-mini">健康</span></td>
+                                <td>
+                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                                </td>
+                            </tr>*@
+                           
+                        </tbody>
+                    </table>
+                </div><!-- /content-panel -->
+            </div><!-- /col-md-12 -->
+        </div><!-- /row -->
+
+    </section><! --/wrapper -->
+</section><!-- /MAIN CONTENT -->
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.4.4.min.js"></script>
+<script>
+        //圖片縮圖
+        $(window).load(function () {
+            $("img").each(function (i) {
+                if ($(this).attr("alumb") == "true") {
+                    //移除目前設定的影像長寬
+                    $(this).removeAttr('width');
+                    $(this).removeAttr('height');
+
+                    //取得影像實際的長寬
+                    var imgW = $(this).width();
+                    var imgH = $(this).height();
+
+                    //計算縮放比例
+                    var w = $(this).attr("_w") / imgW;
+                    var h = $(this).attr("_h") / imgH;
+                    var pre = 1;
+                    if (w > h) {
+                        pre = h;
+                    } else {
+                        pre = w;
+                    }
+
+                    //設定目前的縮放比例
+                    $(this).width(imgW * pre);
+                    $(this).height(imgH * pre);
+                }
+            });
+        });
+</script>
+
+
+
+
+
+

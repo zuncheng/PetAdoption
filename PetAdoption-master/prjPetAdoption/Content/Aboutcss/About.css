@@ -1,0 +1,45 @@
+﻿
+
+body{
+    font-family:微軟正黑體;
+}
+.img{
+	border-radius: 10px;
+    display:block;
+    margin: auto;
+    width:90%;
+}
+
+.div1{
+    margin:0px auto;
+    height:20%;
+}
+
+
+.point{
+    float:left;
+}
+
+.descr{
+    float:left;
+}
+
+footer p {
+    text-align: center;
+}
+
+
+
+
+section#section_service img {
+  border-radius:10px;
+  width: 100%;
+}
+
+
+
+section#section_service .img_wrap {
+  height: 220px;
+  overflow: hidden;
+  border-radius: 10px;
+}
